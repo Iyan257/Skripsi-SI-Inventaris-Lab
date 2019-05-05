@@ -12,6 +12,7 @@ class Notifikasi_model extends CI_Model
     public function get_notifications($id = false, $id_user=false, $condition=[])
     {
         $this->delete_exp_notification();
+        $this->db->select(['notifikasi.*']);
         $this->db->where('notifikasi.deleted_at', null);
         if($id_user != false){
             $this->db->where('notifikasi_user.id_user', $id_user);
@@ -19,7 +20,7 @@ class Notifikasi_model extends CI_Model
         $this->db->where($condition);
         $this->db->join('notifikasi_user', 'notifikasi.id = notifikasi_user.id_notifikasi');
         if ($id === false) {
-            $this->db->order_by('notifikasi.id', 'DESC');
+            $this->db->order_by('notifikasi.updated_at', 'DESC');
             $query = $this->db->get('notifikasi');
             $notifications = $query->result_array();
             $d = strtotime("+1 weeks");

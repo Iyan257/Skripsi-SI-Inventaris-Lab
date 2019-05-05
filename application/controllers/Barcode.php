@@ -14,7 +14,7 @@ class Barcode extends Admin_Controller {
         }
 		$this->load->helper('form');
 		$this->load->library(['session', 'form_validation','layout', 'barcoder']);
-		$this->load->model(['ruangan_model','aset_model']);
+		$this->load->model(['aset_model']);
 	}
 	public function index()
 	{
@@ -22,7 +22,6 @@ class Barcode extends Admin_Controller {
             'subtitle' => 'Barcode',
             'pages' => ['Create Barcode' => 'barcode'],
 
-			'ruangan' => $this->ruangan_model->get_rooms(),
 			'user' => $this->user,
         ];
 		$this->layout->template('admin')->render('barcode/index', $data);
@@ -44,32 +43,6 @@ class Barcode extends Admin_Controller {
 	public function getQRCodeBase64($kode){
 		$text = 'http://192.168.1.2:1240/'.'stock_opname_api?kode='.$kode;
 		return 'data:image/png;base64,'.$this->barcoder->getQRCodeBase64($text);
-	}
-
-	public function create(){
-		$asset = $this->aset_model->get_assets(false, ['kode' => $this->input->post('kode')])[0];
-		if($asset == null){
-			$this->session->set_flashdata('errors', 'Sorry, assets not found.');
-			redirect('barcode');
-		}
-		
-        $data = [
-            'subtitle' => 'Barcode',
-            'pages' => ['Create Barcode' => 'barcode'],
-			'user' => $this->user,
-			'ruangan' => $this->ruangan_model->get_rooms(),
-			
-			'kategori' => $asset['nama_kategori_khusus'],
-			'warna_label' => $asset['warna_label'],
-            'info_barcode' => $this->barcoder->getInfo($asset['nama']),
-			'kode'  => $this->input->post('kode'),
-			'tahun_pembelian' => substr($asset['tanggal_penerimaan'],0,4),
-			'merek' => $asset['merek'],
-			'nomor_kursi' => $asset['nomor_kursi'],
-			'nomor_identitas' => $asset['nomor_identitas'],
-		];
-		
-		$this->layout->template('admin')->render('barcode/index', $data);
 	}
 
 	public function create_many(){

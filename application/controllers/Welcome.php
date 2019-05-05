@@ -10,7 +10,9 @@ class Welcome extends Admin_Controller {
 		$this->load->model(['riwayat_perbaikan_model', 'notifikasi_model','aset_model']);
 
 		// check if user have some notifications
-		if($this->ion_auth->in_group("kalab"))$this->check_asset();
+		if($this->ion_auth->in_group("kalab")){
+			$this->check_asset();
+		}
 		$this->check_pembelian();
 	}
 	public function index()
@@ -36,7 +38,7 @@ class Welcome extends Admin_Controller {
 				'tipe' => 'penyusutan',
 			];
 			// check jika notifikasi sudah dibuat sebelumnya
-			$notification = $this->notifikasi_model->get_notifications(false, $this->user->id, ['tipe'=>'penyusutan']);
+			$notification = $this->notifikasi_model->get_notifications(false, $this->user->id, ['notifikasi.tipe'=>'penyusutan']);
 			if(empty($notification)){
 				// buat notifikasi
 				$data['user_group'] = 'kalab';

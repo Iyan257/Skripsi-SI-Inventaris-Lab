@@ -181,7 +181,6 @@ $route['barcode/imgqrcode/(:any)']                  ['GET']  = 'barcode/getQRCod
 $route['barcode/imgqrcode64/(:any)']                ['GET']  = 'barcode/getQRCodeBase64/$1';
 $route['barcode/create_many']                       ['POST']  = 'barcode/create_many';
 $route['barcode/create_from_excel']                 ['POST']  = 'barcode/create_from_excel';
-$route['barcode/create']                            ['POST']  = 'barcode/create';
 $route['barcode/downloadAssets']                    ['GET']  = 'barcode/download_assets';
 
 $route['permintaan']                                ['GET'] = 'permintaan';
