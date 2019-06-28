@@ -2,12 +2,12 @@
     <div class="col-md-12">
         <div class="tabs">
             <ul class="nav nav-tabs">
-                <li class="<?= (isset($_GET['query']))? '':'active'?>">
+                <li class="<?= (isset($_GET['query']) || isset($_GET['permintaan']))? '':'active'?>">
                     <a href="#rencana" data-toggle="tab">
                         Rencana Kerja Anggaran
                     </a>
                 </li>
-                <li class="<?= (isset($_GET['query']))? 'active':''?>">
+                <li class="<?= (isset($_GET['query']) || isset($_GET['permintaan']))? 'active':''?>">
                     <a href="#permintaan" data-toggle="tab">
                         Daftar Permintaan
                     </a>
@@ -15,7 +15,7 @@
             </ul>
             <div class="tab-content" style="padding-bottom:0; border-bottom:0;">
                 
-                <div id="rencana" class="tab-pane <?= (isset($_GET['query']))? '':'active'?>">
+                <div id="rencana" class="tab-pane <?= (isset($_GET['query']) || isset($_GET['permintaan']))? '':'active'?>">
                     <div class="row" style="padding:15px;">
                         <div class="col-md-8"><h3>Daftar RKA</h3></div>
                         <div class="col-sm-4 text-right">
@@ -64,7 +64,7 @@
                     <?php endif; ?>
                 </div>
 
-                <div id="permintaan" class="tab-pane <?= (isset($_GET['query']))? 'active':''?>">
+                <div id="permintaan" class="tab-pane <?= (isset($_GET['query']) || isset($_GET['permintaan']))? 'active':''?>">
                     <div class="panel-body" style="margin-top:20px;">
                         <div><b>Daftar Permintaan Administrator</b></div>
                         <hr>

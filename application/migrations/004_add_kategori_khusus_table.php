@@ -37,7 +37,6 @@ class Migration_Add_kategori_khusus_table extends CI_Migration
         );
 
         $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         $this->dbforge->add_field($data);
         $this->dbforge->add_key('id', true);
@@ -48,19 +47,6 @@ class Migration_Add_kategori_khusus_table extends CI_Migration
             add FOREIGN key (id_kategori) REFERENCES kategori(id)";
             
         $this->db->query($sql);
-
-        // Dumping data for table 'kategori_khusus'
-		$data = array(
-			array(
-                'id_kategori' => '1',
-                'nama_kategori_khusus' => 'Router',
-            ),
-            array(
-                'id_kategori' => '2',
-                'nama_kategori' => 'Switch',
-            ),
-		);
-		//$this->db->insert_batch('kategori_khusus', $data);
     }
 
     public function down()

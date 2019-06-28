@@ -57,6 +57,7 @@
                                                 'kategori' => $asset['nama_kategori_khusus'],
                                                 'nomor_kursi' => $asset['nomor_kursi'],
                                                 'nomor_identitas' => $asset['nomor_identitas'],
+                                                'warna_label' => $asset['warna_label'],
                                                 'info_barcode' => $this->barcoder->getInfo($asset['nama']),
                                             ];
                                         $this->load->view('barcode/label_general', $data); ?>
@@ -71,7 +72,7 @@
                             <div class="col-md-6">
                                 <div class="col-md-12" style="margin-bottom:20px">
                                     <?php if($asset['gambar'] != null): ?>
-                                        <img src="<?php echo base_url('assets/images/aset/'.$asset['gambar'])?>" style="max-width:100%; max-height:150px;" alt="<?= $asset['gambar']?>" />
+                                        <a target="blank" href="<?php echo base_url('assets/images/aset/'.$asset['gambar'])?>" ><img src="<?php echo base_url('assets/images/aset/'.$asset['gambar'])?>" style="max-width:100%; max-height:150px;" alt="<?= $asset['gambar']?>" /></a>
                                     <?php else: ?>
                                         Tidak ada gambar
                                     <?php endif;?>
@@ -127,7 +128,17 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="os">Sistem Operasi</label>
                                     <div class="col-sm-9">
-                                        <input type="text" id="os" name="os" class="form-control" value="<?= $specification['os'] ?>" readonly="readonly"/>
+                                        <?php 
+                                            $os=[]; 
+                                            if($specification['os1']!=null) array_push($os, $specification['os1']); 
+                                            if($specification['os2']!=null) array_push($os, $specification['os2']); 
+                                            if($specification['os3']!=null) array_push($os, $specification['os3']); 
+                                        ?>
+                                        <input type="text" id="os" name="os" class="form-control" value = "<?= (!empty($os))?
+                                            implode(', ', array_map(function ($x) use ($os) {
+                                                return $os[$x];
+                                            }, range(0, count($os) - 1))) :'-';
+                                        ?>" readonly="readonly"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -353,7 +364,7 @@
                                         <th>Masalah</th>
                                         <th>Solusi</th>
                                         <th>Keterangan</th>
-                                        <th>Surat</th>
+                                        <th style="min-width:100px;">Surat</th>
                                         <th class="kolom_aksi" style="width:15%;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -374,8 +385,8 @@
                                             <?php endif; ?>
 
                                             <td class="text-center" style="min-width:100px;">
-                                                <a  class="btn btn-sm btn-info" href="<?= base_url('perbaikan/edit/' . $h['id']) ?>"><i class="fa fa-edit"></i></a> 
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Are you sure you want to delete?')){$('#del_<?= $i ?>').submit()}"><i class="fa fa-trash-o"></i></button>
+                                                <a  class="btn btn-sm btn-info" href="<?= base_url('perbaikan/edit/' . $h['id']) ?>" data-toggle="tooltip" data-placement="top" title="ubah"><i class="fa fa-edit"></i></a> 
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Are you sure you want to delete?')){$('#del_<?= $i ?>').submit()}"  data-toggle="tooltip" data-placement="top" title="hapus"><i class="fa fa-trash-o"></i></button>
                                             </td>
                                             <?= form_open('perbaikan/delete/' . $h['id'], ['id' => "del_$i"]); ?></form>
                                         </tr>

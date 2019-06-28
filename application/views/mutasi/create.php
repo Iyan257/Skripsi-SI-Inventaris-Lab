@@ -34,9 +34,9 @@
                     <label class="control-label" for="kondisi">Kondisi</label>
                     <select class="form-control mb-md"  id="kondisi" name="kondisi" placeholder="Pilih kondisi">
                         <option value="" disabled selected>Pilih kondisi</option>
-                        <option>baik</option>
-                        <option>sedang diperbaiki</option>
-                        <option>rusak</option>
+                        <?php foreach($kondisi as $k): ?>
+                            <option><?=$k['nilai_acuan']?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>

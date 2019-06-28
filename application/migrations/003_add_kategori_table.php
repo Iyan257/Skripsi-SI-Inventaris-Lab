@@ -26,7 +26,6 @@ class Migration_Add_kategori_table extends CI_Migration
         );
 
         $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         $this->dbforge->add_field($data);
         $this->dbforge->add_key('id', true);
@@ -35,10 +34,16 @@ class Migration_Add_kategori_table extends CI_Migration
         // Dumping data for table 'kategori'
 		$data = array(
 			array(
-                'nama_kategori' => 'Elektronik',
+                'nama_kategori' => 'Jaringan',
             ),
             array(
-                'nama_kategori' => 'Non-Elektronik',
+                'nama_kategori' => 'Non-Jaringan',
+            ),
+            array(
+                'nama_kategori' => 'Perlengkapan',
+            ),
+            array(
+                'nama_kategori' => 'Peralatan',
             ),
 		);
 		$this->db->insert_batch('kategori', $data);

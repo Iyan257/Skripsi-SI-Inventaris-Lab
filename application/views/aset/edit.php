@@ -50,10 +50,9 @@
                         <label class="col-sm-3 control-label" for="kondisi">Kondisi <span class="required">*</span></label>
                         <div class="col-sm-9">
                             <select name='kondisi' id='kondisi' required>
-                                <option value="baik" <?= ($asset['kondisi'] =='baik')? 'selected':'' ?> >baik</option>
-                                <option value="rusak" <?= ($asset['kondisi'] =='rusak')? 'selected':'' ?> >rusak</option>
-                                <option value="sedang diperbaiki" <?= ($asset['kondisi'] =='sedang diperbaiki')? 'selected':'' ?> >sedang diperbaiki</option>
-                                <option value="dioper ke BTI" <?= ($asset['kondisi'] =='dioper ke BTI')? 'selected':'' ?> >dioper ke BTI</option>
+                                <?php foreach($kondisi as $k): ?>
+                                    <option value="<?=$k['nilai_acuan']?>" <?= ($asset['kondisi'] == $k['nilai_acuan'])? 'selected':'' ?>><?=$k['nilai_acuan']?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -117,7 +116,18 @@
                                     <td><?= (isset($spec['type']) && $spec['type']!=null)? $spec['type']: '-'?></td>
                                     <td><?= (isset($spec['jumlah_port']) && $spec['jumlah_port']!=null)? $spec['jumlah_port']: '-'?></td>
                                     <td><?= (isset($spec['processor']) && $spec['processor']!=null)? $spec['processor']: '-'?></td>
-                                    <td><?= (isset($spec['os']) && $spec['os']!=null)? $spec['os']: '-'?></td>
+                                    <?php 
+                                        $os=[]; 
+                                        if($spec['os1']!=null) array_push($os, $spec['os1']); 
+                                        if($spec['os2']!=null) array_push($os, $spec['os2']); 
+                                        if($spec['os3']!=null) array_push($os, $spec['os3']); 
+                                    ?>
+                                    
+                                    <td><?= (!empty($os))?
+                                        implode(', ', array_map(function ($x) use ($os) {
+                                            return $os[$x];
+                                        }, range(0, count($os) - 1))) :'-';
+                                    ?></td>  
                                     <td><?= (isset($spec['memory']) && $spec['memory']!=null)? $spec['memory']: '-'?></td>
                                     <td><?= (isset($spec['hard_drive']) && $spec['hard_drive']!=null)? $spec['hard_drive']: '-'?></td>
                                     <td><?= (isset($spec['keterangan']) && $spec['keterangan']!=null)? $spec['keterangan']: '-'?></td>

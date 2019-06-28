@@ -12,7 +12,8 @@ class Aset extends Admin_Controller {
             show_404();
         }
 		$this->load->library(['session', 'barcoder']);
-		$this->load->model(['kategori_model', 'kategori_khusus_model','ruangan_model','aset_model','riwayat_perbaikan_model', 'spesifikasi_model']);
+		$this->load->model(['kategori_model', 'kategori_khusus_model','ruangan_model','aset_model',
+		'riwayat_perbaikan_model', 'spesifikasi_model', 'acuan_aset_model']);
 	}
 	public function index()
 	{
@@ -58,7 +59,6 @@ class Aset extends Admin_Controller {
 				$condition['jumlah_port'] = $this->input->get('jumlah_port');
 			}
 		}
-
 		$pages = [];
 		if(in_array("kalab", $this->groups)){
 			$pages = ['Aset' => 'kalab/aset'];
@@ -74,6 +74,7 @@ class Aset extends Admin_Controller {
 			'groups' => $this->groups,
 			'assets' => $this->aset_model->get_assets(false, $condition),
 			'kategori' => $this->kategori_model->get_categories(),
+			'kondisi' => $this->acuan_aset_model->get_acuan(false, 'kondisi'),
 			'ruangan' => $this->ruangan_model->get_rooms(),
 			'spesifikasi' => $this->spesifikasi_model->get_all_specification(),
 		];
@@ -93,6 +94,7 @@ class Aset extends Admin_Controller {
 
 			'kategori' => $this->kategori_model->get_categories(),
 			'kategori_khusus' => $this->kategori_khusus_model->get_categories(),
+			'kondisi' => $this->acuan_aset_model->get_acuan(false, 'kondisi'),
 			'ruangan' => $this->ruangan_model->get_rooms(),
 			'user' => $this->user,
 			'groups' => $this->groups,
@@ -163,30 +165,6 @@ class Aset extends Admin_Controller {
 		if($this->input->post('keterangan') != null){
 			$data['keterangan'] = $this->input->post('keterangan');
 		}
-
-		if($this->input->post('label') != null && $this->input->post('label')!= "-"){
-			$this->load->helper(['config_file','string']);
-
-			$public_path = get_public_path();
-			$file_name = string_random(5).'_'.$data['kode'].'.png';
-			$label_path = $public_path.'/assets/images/barcode/'. $file_name;
-
-			$label = $this->input->post('label');
-			list($type, $label) = explode(';', $label);
-			list(, $label)      = explode(',', $label);
-			$label = base64_decode($label);
-			
-			if(file_put_contents($label_path , $label) === false){
-				$this->session->set_flashdata('errors', 'Sorry, can not save barcode right now.');
-				if(in_array("kalab", $this->groups)){
-					redirect('kalab/aset/index');
-				}else{
-					redirect('admin/aset/index');
-				}
-			}else{
-				$data['barcode'] = $file_name;
-			}
-		}
 		
 		if(!empty($_FILES['userfile']['name'])){
 			$this->load->helper(['string','config_file']);
@@ -232,6 +210,7 @@ class Aset extends Admin_Controller {
 			'asset' => $asset,
 			'kategori' => $this->kategori_model->get_categories(),
 			'kategori_khusus' => $this->kategori_khusus_model->get_categories(),
+			'kondisi' => $this->acuan_aset_model->get_acuan(false, 'kondisi'),
 			'ruangan' => $this->ruangan_model->get_rooms(),
 			'specification' => $this->spesifikasi_model->get_specification(),
 			'user' => $this->user,
@@ -281,30 +260,6 @@ class Aset extends Admin_Controller {
 			'nomor_identitas'=> $this->input->post('nomor_identitas'),
 			'keterangan'=> $this->input->post('keterangan'),
 		);
-		
-		if($this->input->post('label') != null && $this->input->post('label')!= "-"){
-			$this->load->helper(['config_file','string']);
-
-			$public_path = get_public_path();
-			$file_name = string_random(5).'_'.$data['kode'].'.png';
-			$label_path = $public_path.'/assets/images/barcode/'. $file_name;
-
-			$label = $this->input->post('label');
-			list($type, $label) = explode(';', $label);
-			list(, $label)      = explode(',', $label);
-			$label = base64_decode($label);
-			
-			if(file_put_contents($label_path , $label) === false){
-				$this->session->set_flashdata('errors', 'Sorry, can not save barcode right now.');
-				if(in_array("kalab", $this->groups)){
-					redirect('kalab/aset/index');
-				}else{
-					redirect('admin/aset/index');
-				}
-			}else{
-				$data['barcode'] = $file_name;
-			}
-		}
 
 		if(!empty($_FILES['userfile']['name'])){
 			$this->load->helper(['string','config_file']);
@@ -507,8 +462,6 @@ class Aset extends Admin_Controller {
 						}
 						$result = $this->aset_model->create_asset($data);
 						$this->session->set_flashdata('message', 'Successfully upload data asset.');
-					}else{
-						break;
 					}
 				}else{
 					$range = 'A'.$i.':N'.$i;
@@ -552,8 +505,6 @@ class Aset extends Admin_Controller {
 						}
 						$result = $this->aset_model->update_asset($data);
 						$this->session->set_flashdata('message', 'Successfully update data asset.');
-					}else{
-						break;
 					}
 				}
 			}
@@ -595,7 +546,7 @@ class Aset extends Admin_Controller {
 				foreach($data as $i=>$aset){
 					$cell = 'A'. (count($data) - $i + 2);
 					$temp = [$aset['id'], '', '', '', '',$aset['kode'], $aset['nama_aset'],
-					'', '', $aset['tanggal_penerimaan']];
+					'', '', $aset['tanggal_penerimaan'], $aset['nilai_aset']];
 					$sheet->fromArray($temp, NULL, $cell);
 				}
 			}else{

@@ -60,6 +60,7 @@ class Auth extends CI_Controller
     public function logout()
     {
         $logout = $this->ion_auth->logout();
+        //$logout = $this->ion_auth->logout();
         $this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('auth/login');
     }

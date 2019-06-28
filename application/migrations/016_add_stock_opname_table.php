@@ -46,7 +46,9 @@ class Migration_Add_stock_opname_table extends CI_Migration
                 'stock_opname' => '0',
             ),
 		);
-		$this->db->insert_batch('status_so', $data);
+        $this->db->insert_batch('status_so', $data);
+        $this->db->query("alter table stock_opname
+        add FOREIGN key (kode) REFERENCES aset(kode);");
     }
 
     public function down()

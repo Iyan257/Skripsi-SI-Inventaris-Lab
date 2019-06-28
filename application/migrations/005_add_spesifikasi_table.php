@@ -34,7 +34,17 @@ class Migration_Add_spesifikasi_table extends CI_Migration
                 'constraint' => '255',
                 'null' => true,
             ),
-            'os' => array(
+            'os1' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => true,
+            ),
+            'os2' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => true,
+            ),
+            'os3' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => true,
@@ -57,7 +67,6 @@ class Migration_Add_spesifikasi_table extends CI_Migration
         );
 
         $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         $this->dbforge->add_field($data);
         $this->dbforge->add_key('id', true);
@@ -68,7 +77,9 @@ class Migration_Add_spesifikasi_table extends CI_Migration
 			array(
                 'type' => 'HP',
                 'processor' => 'i5',
-                'os' => 'DOS',
+                'os1' => 'Windows',
+                'os2' => 'Ubuntu',
+                'os3' => '',
                 'memory' => '8 GB',
                 'hard_drive' => '1 TB',
                 'keterangan' => '-'

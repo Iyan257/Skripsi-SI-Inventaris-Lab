@@ -51,23 +51,10 @@ class Migration_Add_mutasi_table extends CI_Migration
             
         $this->db->query($sql);
 		
-		$this->db->query('ALTER TABLE mutasi ADD updated_by MEDIUMINT(8) unsigned AFTER deleted_at');
         $this->db->query('ALTER TABLE mutasi ADD created_by MEDIUMINT(8) unsigned AFTER deleted_at');
+		$this->db->query('ALTER TABLE mutasi ADD updated_by MEDIUMINT(8) unsigned AFTER deleted_at');
         $this->db->query('ALTER TABLE mutasi ADD FOREIGN key (created_by) REFERENCES users(id),
         ADD FOREIGN key (updated_by) REFERENCES users(id);');
-
-        // Dumping data for table 'mutasi'
-		$data = array(
-			array(
-                'merek' => 'HP',
-                'processor' => 'i5',
-                'os' => 'DOS',
-                'memory' => '8 GB',
-                'hard_drive' => '1 TB',
-                'keterangan' => '-'
-            ),
-		);
-		//$this->db->insert_batch('mutasi', $data);
     }
 
     public function down()

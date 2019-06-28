@@ -29,10 +29,11 @@ class Migration_Add_notifikasi_user_table extends CI_Migration
                 'constraint' => '8',
                 'unsigned' => true,
             ),
+            'exp_date' => array(
+                'type' => 'DATE',
+                'null' => true,
+            ),
         );
-        
-        $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         $this->dbforge->add_field($data);
         $this->dbforge->add_key('id', true);
@@ -40,7 +41,8 @@ class Migration_Add_notifikasi_user_table extends CI_Migration
 
         $sql="
         alter table notifikasi_user
-        add FOREIGN key (id_user) REFERENCES users(id) ";
+        add FOREIGN key (id_user) REFERENCES users(id),
+        add FOREIGN key (id_notifikasi) REFERENCES notifikasi(id); ";
         
         $this->db->query($sql);
     }

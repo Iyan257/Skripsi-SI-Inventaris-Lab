@@ -11,7 +11,6 @@ class Ruangan_model extends CI_Model
 
     public function get_rooms($id = false)
     {
-        $this->db->where('deleted_at', null);
         if ($id === false) {
             $this->db->order_by('ruangan.id', 'DESC');
             $query = $this->db->get('ruangan');
@@ -23,7 +22,6 @@ class Ruangan_model extends CI_Model
     }
     public function get_num_rows()
     {
-        $this->db->where('deleted_at', null);
         return $this->db->get('ruangan')->num_rows();
     }
 
@@ -56,7 +54,6 @@ class Ruangan_model extends CI_Model
         $file_name = $this->get_rooms($id)['gambar'];
         delete_file('ruangan', $file_name);
 
-        $data = $this->db_timestamp->softdelete_delete();
-        return $this->db->update('ruangan', $data, "id = $id");
+        return $this->db->delete('ruangan', "id = $id");
     }
 }

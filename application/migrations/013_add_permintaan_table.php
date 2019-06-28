@@ -42,7 +42,6 @@ class Migration_Add_permintaan_table extends CI_Migration
         );
 
         $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         
         $this->dbforge->add_field($data);

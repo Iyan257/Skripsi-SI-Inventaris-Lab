@@ -16,7 +16,6 @@ class Permintaan extends Admin_Controller
             'user' => $this->user,
             'request' => $this->permintaan_model->get_request(false, $this->user->id),
         ];
-
         $this->layout->template('admin')->render('permintaan/index', $data);
     }
 
@@ -44,7 +43,7 @@ class Permintaan extends Admin_Controller
 			'judul' => 'Terdapat permintaan barang baru untuk tahun '.$data['rencana_tahun'],
 			'deskripsi' => "User '".$this->user->inisial."' mengirimi Anda satu buah permintaan pembelian baru",
 			'tipe' => 'pembelian',
-			'user_group' => 'kalab',
+			'user_group' => ['kalab'],
 		];
 		
 		$this->notifikasi_model->create_notification($notification);
@@ -72,6 +71,6 @@ class Permintaan extends Admin_Controller
         ];
         $this->permintaan_model->update_request($data);
         $this->session->set_flashdata('message', 'Successfully mark request history as read.');
-        redirect('kalab/rka/index');
+        redirect('kalab/rka?permintaan=ya');
     }
 }

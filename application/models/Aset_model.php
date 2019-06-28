@@ -68,6 +68,12 @@ class Aset_model extends CI_Model
                                 'aset.umur_ekonomis','aset.nilai_aset', 'aset.nomor_kursi', 'aset.nomor_identitas' ,'aset.gambar', 'aset.keterangan', 'ruangan.nama', 'ruangan.ruangan','kategori.nama_kategori',
                                 'kategori_khusus.nama_kategori_khusus','kategori_khusus.warna_label' ,'TIMESTAMPDIFF(year, aset.tanggal_penerimaan, NOW()) as masa_pakai']);
         $this->db->where('aset.deleted_at', null);
+        if(isset($condition['os'])){
+            $this->db->where_in('os1', $condition['os']);
+            $this->db->or_where_in('os2', $condition['os']);
+            $this->db->or_where_in('os3', $condition['os']);
+            unset($condition['os']);
+        }
         $this->db->where($condition);
         $this->db->order_by('aset.id', 'DESC');
         $this->db->join('ruangan', 'aset.id_ruangan = ruangan.id', 'left');

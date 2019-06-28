@@ -74,7 +74,7 @@
 									</a>
 								<?php elseif($notif['tipe']=='pembelian'):?>
 									<?php if(in_array("kalab",$groups)):?>
-										<a href="<?= base_url('kalab/rka').'#permintaan'?>">
+										<a href="<?= base_url('kalab/rka').'?permintaan=ya'?>">
 											VIEW
 										</a>
 									<?php elseif(in_array("input_admin", $groups)) : ?>
@@ -82,8 +82,11 @@
 											VIEW
 										</a>
 									<?php endif; ?>
+								<?php elseif($notif['tipe']=='kerusakan'):?>
+									<a href="<?= base_url('perbaikan')?>">
+										VIEW
+									</a>
 								<?php endif; ?>
-								
 							</li>
 						<?php endforeach; ?>
 					</ul>

@@ -58,10 +58,9 @@
                         </label>
                         <div class="col-sm-9">
                             <select name='kondisi' id='kondisi' required>
-                                <option value="baik">baik</option>
-                                <option value="rusak">rusak</option>
-                                <option value="sedang diperbaiki">sedang diperbaiki</option>
-                                <option value="dioper ke BTI" >dioper ke BTI</option>
+                                <?php foreach($kondisi as $k): ?>
+                                    <option><?=$k['nilai_acuan']?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -139,9 +138,18 @@
                                 <td>
                                     <?= (isset($spec['processor']) && $spec['processor']!=null)? $spec['processor']: '-'?>
                                 </td>
-                                <td>
-                                    <?= (isset($spec['os']) && $spec['os']!=null)? $spec['os']: '-'?>
-                                </td>
+                                <?php 
+                                    $os=[]; 
+                                    if($spec['os1']!=null) array_push($os, $spec['os1']); 
+                                    if($spec['os2']!=null) array_push($os, $spec['os2']); 
+                                    if($spec['os3']!=null) array_push($os, $spec['os3']); 
+                                ?>
+                                    
+                                <td><?= (!empty($os))?
+                                    implode(', ', array_map(function ($x) use ($os) {
+                                        return $os[$x];
+                                    }, range(0, count($os) - 1))) :'-';
+                                ?></td>
                                 <td>
                                     <?= (isset($spec['memory']) && $spec['memory']!=null)? $spec['memory']: '-'?>
                                 </td>

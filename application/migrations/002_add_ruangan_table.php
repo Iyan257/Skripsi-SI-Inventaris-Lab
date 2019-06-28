@@ -35,7 +35,6 @@ class Migration_Add_ruangan_table extends CI_Migration
         );
 
         $this->db_timestamp->timestamp_field($data);
-        $this->db_timestamp->softdelete_field($data);
 
         $this->dbforge->add_field($data);
         $this->dbforge->add_key('id', true);

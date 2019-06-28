@@ -11,7 +11,6 @@ class Kategori_model extends CI_Model
 
     public function get_categories($id = false)
     {
-        $this->db->where('deleted_at', null);
         if ($id === false) {
             $this->db->order_by('kategori.nama_kategori', 'ASC');
             $query = $this->db->get('kategori');
@@ -23,7 +22,6 @@ class Kategori_model extends CI_Model
     }
     public function get_num_rows()
     {
-        $this->db->where('deleted_at', null);
         return $this->db->get('kategori')->num_rows();
     }
 
@@ -46,7 +44,6 @@ class Kategori_model extends CI_Model
 
     public function delete_category($id)
     {
-        $data = $this->db_timestamp->softdelete_delete();
-        return $this->db->update('kategori', $data, "id = $id");
+        return $this->db->delete('kategori', "id = $id");
     }
 }

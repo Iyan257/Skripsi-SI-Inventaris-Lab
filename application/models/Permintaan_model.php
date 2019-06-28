@@ -12,7 +12,6 @@ class Permintaan_model extends CI_Model
     public function get_request($id = false, $id_user = false, $like=[])
     {
         $this->db->select('permintaan.*, users.inisial, users.name');
-        $this->db->where('permintaan.deleted_at', null);
         $this->db->like($like);
         if($id_user != false){
             $this->db->where('permintaan.id_user', $id_user);
@@ -33,7 +32,6 @@ class Permintaan_model extends CI_Model
 
     public function get_num_rows()
     {
-        $this->db->where('deleted_at', null);
         return $this->db->get('permintaan')->num_rows();
     }
 
@@ -56,7 +54,6 @@ class Permintaan_model extends CI_Model
 
     public function delete_request($id)
     {
-        $data = $this->db_timestamp->softdelete_delete();
-        return $this->db->update('permintaan', $data, "id = $id");
+        return $this->db->delete('permintaan', "id = $id");
     }
 }

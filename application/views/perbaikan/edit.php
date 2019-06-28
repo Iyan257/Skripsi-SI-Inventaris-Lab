@@ -11,10 +11,9 @@
                         <label class="col-sm-3 control-label" for="kondisi">Kondisi <span class="required">*</span></label>
                         <div class="col-sm-9">
                             <select name='kondisi' id='kondisi'>
-                                <option value="baik" <?= ($history['kondisi'] == 'baik')? 'selected' : '' ?>>baik</option>
-                                <option value="rusak"<?= ($history['kondisi'] == 'rusak')? 'selected' : '' ?>>rusak</option>
-                                <option value="sedang diperbaiki" <?= ($history['kondisi'] == 'sedang diperbaiki')? 'selected' : '' ?>>sedang diperbaiki</option>
-                                <option value="dioper ke BTI" <?= ($history['kondisi'] == 'dioper ke BTI')? 'selected' : '' ?>>dioper ke BTI</option>
+                                <?php foreach($kondisi as $k): ?>
+                                    <option value="<?=$k['nilai_acuan']?>" <?= ($history['kondisi'] == $k['nilai_acuan'])? 'selected':'' ?>><?=$k['nilai_acuan']?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

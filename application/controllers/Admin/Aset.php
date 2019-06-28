@@ -10,7 +10,7 @@ class Aset extends Admin_Controller {
             show_404();
         }
 		$this->load->library(['session','barcoder']);
-		$this->load->model(['kategori_model', 'kategori_khusus_model','ruangan_model','aset_model','riwayat_perbaikan_model', 'spesifikasi_model']);
+		$this->load->model(['kategori_model', 'kategori_khusus_model','ruangan_model','aset_model','riwayat_perbaikan_model', 'spesifikasi_model', 'acuan_aset_model']);
 	}
 	public function index()
 	{
@@ -59,6 +59,7 @@ class Aset extends Admin_Controller {
 			'groups' =>$this->groups,
 			'assets' => $this->aset_model->get_assets(false, $condition),
 			'kategori' => $this->kategori_model->get_categories(),
+			'kondisi' => $this->acuan_aset_model->get_acuan(false, 'kondisi'),
 			'ruangan' => $this->ruangan_model->get_rooms(),
 			'spesifikasi' => $this->spesifikasi_model->get_all_specification(),
 		];

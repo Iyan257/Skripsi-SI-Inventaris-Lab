@@ -67,23 +67,10 @@ class Migration_Add_riwayat_perbaikan_table extends CI_Migration
             
         $this->db->query($sql);
 		
-		$this->db->query('ALTER TABLE riwayat_perbaikan ADD updated_by MEDIUMINT(8) unsigned AFTER deleted_at');
         $this->db->query('ALTER TABLE riwayat_perbaikan ADD created_by MEDIUMINT(8) unsigned AFTER deleted_at');
+		$this->db->query('ALTER TABLE riwayat_perbaikan ADD updated_by MEDIUMINT(8) unsigned AFTER deleted_at');
         $this->db->query('ALTER TABLE riwayat_perbaikan ADD FOREIGN key (created_by) REFERENCES users(id),
         ADD FOREIGN key (updated_by) REFERENCES users(id);');
-
-        // Dumping data for table 'riwayat_perbaikan'
-		$data = array(
-			array(
-                'merek' => 'HP',
-                'processor' => 'i5',
-                'os' => 'DOS',
-                'memory' => '8 GB',
-                'hard_drive' => '1 TB',
-                'keterangan' => '-'
-            ),
-		);
-		//$this->db->insert_batch('riwayat_perbaikan', $data);
     }
 
     public function down()

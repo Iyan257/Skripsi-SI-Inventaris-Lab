@@ -9,7 +9,7 @@ class Perbaikan extends Admin_Controller {
             show_404();
         }
 		$this->load->library(['session']);
-		$this->load->model(['aset_model','riwayat_perbaikan_model']);
+		$this->load->model(['aset_model', 'acuan_aset_model', 'riwayat_perbaikan_model','notifikasi_model']);
 	}
 	
 	public function index($id=false)
@@ -18,13 +18,19 @@ class Perbaikan extends Admin_Controller {
         $data = [
 			'subtitle' => 'Perbaikan',
 			'pages' => ['Perbaikan'=>'perbaikan'],
-			'user' => $this->user,
+            'user' => $this->user,
+            'groups' => $this->groups,
         ];
         if($id !== false){
             $data['history'] = [$this->riwayat_perbaikan_model->get_history($id)];
         }else{
             $data['history'] = $this->riwayat_perbaikan_model->get_history();
         }
+        $aset_diperbaiki = [];
+        foreach($data['history'] as $h){
+            array_push($aset_diperbaiki, $this->aset_model->get_assets(false,['kode'=>$h['kode']])[0]);
+        }
+        $data['aset_diperbaiki'] = $aset_diperbaiki;
         $this->layout->template('admin')->render('perbaikan/index', $data);
 	}
 	public function create()
@@ -96,7 +102,18 @@ class Perbaikan extends Admin_Controller {
 
 		$perbaikan = $this->riwayat_perbaikan_model->create_history($data);
 
-        $this->aset_model->update_asset(['id'=> $aset[0]['id'],'kondisi'=> $this->input->post('kondisi')]);
+        $repaired_asset = $this->aset_model->update_asset(['id'=> $aset[0]['id'],'kondisi'=> $this->input->post('kondisi')]);
+        
+        /*create notification*/
+        $notification = [
+			'judul' => 'Terdapat aset baru dalam proses perbaikan ',
+            'deskripsi' => 'Aset dengan kode '.$repaired_asset['kode'].' dari ruangan '.
+                            $repaired_asset['nama']." dalam status '".$repaired_asset['kondisi']."'",
+			'tipe' => 'kerusakan',
+			'user_group' => ['input_admin','kalab','admin'],
+		];
+		
+        $this->notifikasi_model->create_notification($notification);
         
 		$this->session->set_flashdata('message', 'Successfully change condition of assets.');
 		redirect('perbaikan/index');
@@ -112,6 +129,7 @@ class Perbaikan extends Admin_Controller {
             'header' => "Edit history '" . $history['kode'] . "'",
 
             'history' => $history,
+            'kondisi' => $this->acuan_aset_model->get_acuan(false, 'kondisi'),
             'created_user' => $this->ion_auth->user($history['created_by'])->row(),
 			'last_updated_user' => $this->ion_auth->user($history['updated_by'])->row(),
         ]);
@@ -126,7 +144,10 @@ class Perbaikan extends Admin_Controller {
         if ($this->form_validation->run() === false) {
             $this->session->set_flashdata('errors', validation_errors());
             redirect('perbaikan/index');
-		}
+		}else if ($this->input->post('tanggal_selesai')!= null && $this->input->post('tanggal_masuk') > $this->input->post('tanggal_selesai')){
+            $this->session->set_flashdata('errors', "Sorry, the date of entry must be past from the end date");
+            redirect('perbaikan/edit/'.$id);
+        }
         
         $aset = $this->aset_model->get_assets(false,['kode'=> $this->input->post('kode')]);
 

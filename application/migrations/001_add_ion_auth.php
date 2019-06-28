@@ -230,7 +230,9 @@ class Migration_Add_ion_auth extends CI_Migration {
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table($this->tables['login_attempts']);
-
+		$this->db->query("alter table users_groups
+        add FOREIGN key (user_id) REFERENCES users(id), 
+        add FOREIGN key (group_id) REFERENCES groups(id);");
 	}
 
 	public function down() {

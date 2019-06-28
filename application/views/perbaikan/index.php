@@ -31,7 +31,13 @@
                     <?php foreach($history as $i => $h): ?>
                         <tr>
                             <td style="display:none"><?=$h['id']?></td>
-                            <td><?= $h['kode']?></td>
+                            <?php if(in_array("kalab", $groups)) :?>
+                                <td><a href="<?= base_url('kalab/aset/'.$aset_diperbaiki[$i]['id']) ?>"><?= $h['kode']?></a></td>
+							<?php elseif(in_array("input_admin", $groups)) : ?>
+                                <td><a href="<?= base_url('admin/aset/'.$aset_diperbaiki[$i]['id']) ?>"><?= $h['kode']?></a></td>
+							<?php elseif(in_array("admin", $groups)) : ?>
+                                <td><a href="<?= base_url('aset/'.$aset_diperbaiki[$i]['id']) ?>"><?= $h['kode']?></a></td>
+							<?php endif; ?>
                             <td><?= isset($h['tanggal_masuk']) ? $h['tanggal_masuk'] : '-' ?></td>
                             <td><?= isset($h['tanggal_selesai']) ? $h['tanggal_selesai']: '-' ?></td>
                             <td><?= isset($h['masalah']) ? $h['masalah']: '-' ?></td>

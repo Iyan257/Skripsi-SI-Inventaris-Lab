@@ -10,7 +10,7 @@
                 <div class="center-sign">
                     <div class="panel panel-sign">
                         <div class="panel-title-sign mt-xl text-right">
-                            <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>
+                            <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Login </h2>
                         </div>
                         <div class="panel-body">
                             <?= form_open('auth/login'); ?>
@@ -66,14 +66,14 @@
 
                                 <div class="row">
                                     <div class="col-sm-4 col-sm-offset-8 text-right">
-                                        <button name="submit" type="submit" class="btn btn-primary">Sign In</button>
+                                        <button name="submit" type="submit" class="btn btn-primary">Login</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2018. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    <!--<p class="text-center text-muted mt-md mb-md">&copy; Copyright 2018. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>-->
                 </div>
             </section>
         </section>

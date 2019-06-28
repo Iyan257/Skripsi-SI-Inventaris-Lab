@@ -11,7 +11,6 @@ class Kategori_khusus_model extends CI_Model
 
     public function get_categories($id = false, $condition=[])
     {
-        $this->db->where('kategori_khusus.deleted_at', null);
         $this->db->where($condition);
         $this->db->select(['kategori_khusus.id', 'kategori_khusus.id_kategori', 'kategori_khusus.nama_kategori_khusus', 'kategori_khusus.warna_label',
                         'kategori.nama_kategori',' COUNT(id_kategori_khusus) as ct']);
@@ -32,7 +31,6 @@ class Kategori_khusus_model extends CI_Model
     }
     public function get_num_rows()
     {
-        $this->db->where('deleted_at', null);
         return $this->db->get('kategori_khusus')->num_rows();
     }
 
@@ -55,7 +53,6 @@ class Kategori_khusus_model extends CI_Model
 
     public function delete_category($id)
     {
-        $data = $this->db_timestamp->softdelete_delete();
-        return $this->db->update('kategori_khusus', $data, "id = $id");
+        return $this->db->delete('kategori_khusus', "id = $id");
     }
 }

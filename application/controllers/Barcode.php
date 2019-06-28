@@ -32,7 +32,7 @@ class Barcode extends Admin_Controller {
 	}
 
 	public function getQRCode($kode){
-		$text = 'http://192.168.1.2:1240/'.'stock_opname_api?kode='.$kode;
+		$text = 'http://192.168.43.65:1240/'.'stock_opname_api?kode='.$kode;
 		$this->barcoder->getQRCode($text);
 	}
 
@@ -41,7 +41,7 @@ class Barcode extends Admin_Controller {
 	}
 
 	public function getQRCodeBase64($kode){
-		$text = 'http://192.168.1.2:1240/'.'stock_opname_api?kode='.$kode;
+		$text = 'http://192.168.43.65:1240/'.'stock_opname_api?kode='.$kode;
 		return 'data:image/png;base64,'.$this->barcoder->getQRCodeBase64($text);
 	}
 

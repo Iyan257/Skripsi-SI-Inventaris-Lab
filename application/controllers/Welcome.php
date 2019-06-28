@@ -41,7 +41,7 @@ class Welcome extends Admin_Controller {
 			$notification = $this->notifikasi_model->get_notifications(false, $this->user->id, ['notifikasi.tipe'=>'penyusutan']);
 			if(empty($notification)){
 				// buat notifikasi
-				$data['user_group'] = 'kalab';
+				$data['user_group'] = ['kalab'];
 				$this->notifikasi_model->create_notification($data);
 			}
 			else{
@@ -65,6 +65,19 @@ class Welcome extends Admin_Controller {
 			foreach($notification as $n){
 				$this->notifikasi_model->delete_notification_user($n['id']);
 				$this->notifikasi_model->delete_notification($n['id']);
+			}
+		}else{
+			foreach($notification as $i => $n){
+				if($i == 0){
+					$data = [
+						'id' => $n['id'],
+						'deskripsi' => 'Terdapat '.count($assets).' aset yang harus dilengkapi datanya.',
+					];
+					$this->notifikasi_model->update_notification($data);
+				}else{
+					$this->notifikasi_model->delete_notification_user($n['id']);
+					$this->notifikasi_model->delete_notification($n['id']);
+				}
 			}
 		}
 	}

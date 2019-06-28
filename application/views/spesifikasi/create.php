@@ -26,9 +26,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="os">Sistem Operasi</label>
+                        <label class="col-sm-3 control-label" for="os1">Sistem Operasi 1</label>
                         <div class="col-sm-9">
-                            <input type="text" id="os" name="os" class="form-control" placeholder="input os"/>
+                            <input type="text" id="os1" name="os1" class="form-control" placeholder="input os 1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="os2">Sistem Operasi 2</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="os2" name="os2" class="form-control" placeholder="input os 2"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="os3">Sistem Operasi 3</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="os3" name="os3" class="form-control" placeholder="input os 3"/>
                         </div>
                     </div>
                     <div class="form-group">

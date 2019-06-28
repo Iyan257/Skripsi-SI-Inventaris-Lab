@@ -87,84 +87,95 @@
 			</header>
 			<div class="panel-body">
 				<!-- File Button -->
-				<div class="col-md-3" style="padding-left:10px;">
-					<div class="form-group">
-						<label class="control-label" for="type">Type</label>
-						<select name='type' id='type' class="form-control mb-md">
-							<option value="" selected>Pilih type</option>
-							<?php if(count($spesifikasi['type'] > 0)): ?>
-								<?php foreach($spesifikasi['type'] as $k):?>
-									<option value="<?=$k?>"><?=$k?></option>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
+				<div class="row">
+					<div class="col-md-3" style="padding-left:10px;">
+						<div class="form-group">
+							<label class="control-label" for="type"><strong>Type</strong></label>
+							<select name='type' id='type' class="form-control mb-md" onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+								<option value="" selected>Pilih type</option>
+								<?php if(count($spesifikasi['type']) > 0): ?>
+									<?php foreach($spesifikasi['type'] as $k):?>
+										<option value="<?=$k?>"><?=$k?></option>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-3 col-md-offset-1">
+						<div class="form-group">
+							<label class="control-label" for="processor"><strong>Processor</strong></label>
+							<select name='processor' id='processor' class="form-control mb-md" onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+								<option value="" selected>Pilih processor</option>
+								<?php if(count($spesifikasi['processor']) > 0): ?>
+									<?php foreach($spesifikasi['processor'] as $k):?>
+										<option value="<?=$k?>"><?=$k?></option>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</select>
+						</div>
+					</div>
+					<div class="multiselect col-md-3 col-md-offset-1">
+						<div class="form-group">
+							<label class="control-label" for="os"><strong>OS</strong></label>
+							<div id="os" class="selectBox" onclick="showCheckboxes()">
+								<select onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+									<option value="" selected>Pilih os</option>
+								</select>
+								<div class="overSelect"></div>
+							</div>
+							<div id="checkboxes">
+								<?php if(count($spesifikasi['os']) > 0): ?>
+									<?php foreach($spesifikasi['os'] as $i=>$k):?>
+										<label for="<?=$i?>">
+											<input type="checkbox" name="os[]" id="<?=$i?>" value="<?=$k?>"> <?=' '.$k?>
+										</label>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-3 col-md-offset-1">
-					<div class="form-group">
-						<label class="control-label" for="processor">Processor</label>
-						<select name='processor' id='processor' class="form-control mb-md">
-							<option value="" selected>Pilih processor</option>
-							<?php if(count($spesifikasi['processor'] > 0)): ?>
-								<?php foreach($spesifikasi['processor'] as $k):?>
-									<option value="<?=$k?>"><?=$k?></option>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label" for="memory"><strong>Memory / RAM</strong></label>
+							<select name='memory' id='memory' class="form-control mb-md" onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+								<option value="" selected>Pilih memory</option>
+								<?php if(count($spesifikasi['memory']) > 0): ?>
+									<?php foreach($spesifikasi['memory'] as $k):?>
+										<option value="<?=$k?>"><?=$k?></option>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-3 col-md-offset-1">
-					<div class="form-group">
-						<label class="control-label" for="os">OS</label>
-						<select name='os' id='os' class="form-control mb-md">
-							<option value="" selected>Pilih os</option>
-							<?php if(count($spesifikasi['os'] > 0)): ?>
-								<?php foreach($spesifikasi['os'] as $k):?>
-									<option value="<?=$k?>"><?=$k?></option>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
+					<div class="col-md-3 col-md-offset-1">
+						<div class="form-group">
+							<label class="control-label" for="hard_drive"><strong>Hard drive / HDD</strong></label>
+							<select name='hard_drive' id='hard_drive' class="form-control mb-md" onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+								<option value="" selected>Pilih HDD</option>
+								<?php if(count($spesifikasi['hard_drive']) > 0): ?>
+									<?php foreach($spesifikasi['hard_drive'] as $k):?>
+										<option value="<?=$k?>"><?=$k?></option>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="control-label" for="memory">Memory / RAM</label>
-						<select name='memory' id='memory' class="form-control mb-md">
-							<option value="" selected>Pilih memory</option>
-							<?php if(count($spesifikasi['memory'] > 0)): ?>
-								<?php foreach($spesifikasi['memory'] as $k):?>
-									<option value="<?=$k?>"><?=$k?></option>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-3 col-md-offset-1">
-					<div class="form-group">
-						<label class="control-label" for="hard_drive">Hard drive / HDD</label>
-						<select name='hard_drive' id='hard_drive' class="form-control mb-md">
-							<option value="" selected>Pilih HDD</option>
-							<?php if(count($spesifikasi['hard_drive'] > 0)): ?>
-								<?php foreach($spesifikasi['hard_drive'] as $k):?>
-									<option value="<?=$k?>"><?=$k?></option>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-3 col-md-offset-1">
-					<div class="form-group">
-						<label class="control-label" for="jumlah_port">Jumlah Port (Switch)</label>
-						<select name='jumlah_port' id='jumlah_port' class="form-control mb-md">
-							<option value="" selected>Pilih port</option>
-							<?php if(count($spesifikasi['jumlah_port'] > 0)): ?>
-								<?php foreach($spesifikasi['jumlah_port'] as $k):?>
-									<?php if($k != null): ?>
-									<option value="<?=$k?>"><?=$k?></option>
-									<?php endif; ?>
-								<?php endforeach;?>
-							<?php endif; ?>
-						</select>
+					<div class="col-md-3 col-md-offset-1">
+						<div class="form-group">
+							<label class="control-label" for="jumlah_port"><strong>Jumlah Port (Switch)</strong></label>
+							<select name='jumlah_port' id='jumlah_port' class="form-control mb-md" onmousedown="if(this.options.length>4){this.size=4;}"  onchange='this.size=0;' onblur="this.size=0;">
+								<option value="" selected>Pilih port</option>
+								<?php if(count($spesifikasi['jumlah_port']) > 0): ?>
+									<?php foreach($spesifikasi['jumlah_port'] as $k):?>
+										<?php if($k != null): ?>
+										<option value="<?=$k?>"><?=$k?></option>
+										<?php endif; ?>
+									<?php endforeach;?>
+								<?php endif; ?>
+							</select>
+						</div>
 					</div>
 				</div>
 
@@ -243,10 +254,9 @@
 						<label class="control-label" for="kondisi">Kondisi</label>
 						<select class="form-control mb-md"  id="kondisi" name="kondisi" placeholder="Pilih kondisi">
 							<option value="" disabled selected>Pilih kondisi</option>
-							<option>baik</option>
-							<option>sedang diperbaiki</option>
-							<option>dioper ke BTI</option>
-							<option>rusak</option>
+							<?php foreach($kondisi as $k): ?>
+								<option><?=$k['nilai_acuan']?></option>
+							<?php endforeach; ?>
 						</select>
 					</div>
 				</div>
@@ -328,7 +338,7 @@
 							<th>Masa pemakaian</th>
 							<th>Nilai aset</th>
 						<?php endif; ?>
-						<th class="kolom_aksi" style="width:15%;">Aksi</th>
+						<th class="kolom_aksi" style="min-width:125px;">Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -377,3 +387,52 @@
 	</div>
 </section>
 <!-- end: page -->
+
+<script>
+	var expanded = false;
+
+	function showCheckboxes() {
+		var checkboxes = document.getElementById("checkboxes");
+		if (!expanded) {
+			checkboxes.style.display = "block";
+			expanded = true;
+		} else {
+			checkboxes.style.display = "none";
+			$('input[name="os[]"]').prop('checked', false);
+			expanded = false;
+		}
+	}
+</script>
+
+<style>
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+  max-height:90px;
+  overflow:auto;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+</style>

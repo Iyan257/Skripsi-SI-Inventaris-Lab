@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 use Dompdf\Dompdf;
+//require_once dirname(__FILE__) . '/tcpdf/tcpdf.php';
 
 class Pdf extends Dompdf{
     public $filename;
@@ -20,5 +21,13 @@ class Pdf extends Dompdf{
         $this->render();
         // Output the generated PDF to Browser
         $this->stream($this->filename, array("Attachment" => false));
+        
+        /*$this->SetTitle($data['title']);
+        $this->SetAutoPageBreak(true);
+        $this->AddPage('L');
+        $html = $this->ci()->load->view($view, $data, TRUE);
+        $this->writeHTML($html, true, false, true, false, '');
+        $this->Output('kerusakan.pdf', 'I');
+        */
     }
 }

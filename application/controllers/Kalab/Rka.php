@@ -350,7 +350,7 @@ class Rka extends Admin_Controller {
 			'judul' => 'Terdapat aset baru yang sudah terealisasi.',
 			'deskripsi' => 'Terdapat '.$n.' aset yang harus dilengkapi datanya.',
 			'tipe' => 'pembelian',
-			'user_group' => 'input_admin',
+			'user_group' => ['input_admin'],
 		];
 		
 		$this->notifikasi_model->create_notification($notification);

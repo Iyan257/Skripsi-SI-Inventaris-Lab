@@ -10,7 +10,10 @@ class Stock_opname_model extends CI_Model
 
     public function insert_aset($data)
     {
-        $verdict = $this->db->insert('stock_opname', $data);
+        $query = $this->db->get_where('stock_opname', array('kode' => $data['kode']))->row_array();
+        if(!isset($query)){
+            $verdict = $this->db->insert('stock_opname', $data);
+        }else $verdict = false;
         return $verdict;
     }
 
