@@ -348,7 +348,6 @@ class Aset extends Admin_Controller {
 				unset($ruangan['gambar']);
 				unset($ruangan['created_at']);
 				unset($ruangan['updated_at']);
-				unset($ruangan['deleted_at']);
 				$sheet->fromArray(array_values($ruangan), NULL, $cell);
 			}
 		}
@@ -360,7 +359,6 @@ class Aset extends Admin_Controller {
 				$cell = 'A'. ($i + 3);
 				unset($kategori['created_at']);
 				unset($kategori['updated_at']);
-				unset($kategori['deleted_at']);
 				$sheet->fromArray(array_values($kategori), NULL, $cell);
 			}
 		}
@@ -382,7 +380,6 @@ class Aset extends Admin_Controller {
 				$cell = 'A'. (count($data['spesifikasi']) - $i + 2);
 				unset($spesifikasi['created_at']);
 				unset($spesifikasi['updated_at']);
-				unset($spesifikasi['deleted_at']);
 				$sheet->fromArray(array_values($spesifikasi), NULL, $cell);
 			}	
 		}
@@ -390,7 +387,7 @@ class Aset extends Admin_Controller {
 		if($option == 'download'){
 			$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			header('Content-Disposition: attachment; filename="file.xlsx"');
+			header('Content-Disposition: attachment; filename="template_upload_aset.xlsx"');
 			$writer->save("php://output");
 		}else{
 			return $spreadsheet;
