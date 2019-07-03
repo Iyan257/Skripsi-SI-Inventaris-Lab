@@ -315,7 +315,7 @@
 				<?php elseif(in_array("admin", $groups)) : ?>
 
 					<div class="col-sm-5 text-right">
-						<a class="btn btn-secondary" href="<?=base_url('aset/download')?>"><i class="fa fa-file"></i> Download</a>	
+						<a class="btn btn-primary" href="<?=base_url('aset/download')?>"><i class="fa fa-file"></i> Download</a>	
 					</div>
 				<?php endif; ?>
 			<?php endif; ?>

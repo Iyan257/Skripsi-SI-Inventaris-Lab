@@ -84,7 +84,8 @@ class Users extends Admin_Controller
         $this->layout->template('admin')->render('users/edit', [
             'edit_user' => $edit_user,
             'groups' => $this->ion_auth->groups()->result(),
-
+            'subtitle' => 'Users',
+            
             'user' => $this->user,
             'header' => "Edit user '" . $edit_user->name . "'",
             'errors' => $this->session->flashdata('errors'),
